@@ -1,0 +1,594 @@
+{
+  "name": "Inflection Point - Data Collector",
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "name": "inflection-point",
+      "id": "1"
+    },
+    {
+      "name": "newsletter",
+      "id": "2"
+    }
+  ],
+  "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weekday",
+              "weekday": 0,
+              "hour": 21,
+              "minute": 0
+            }
+          ]
+        }
+      },
+      "id": "node-schedule-trigger",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.anthropic.com/rss.xml",
+        "limit": 6,
+        "options": {}
+      },
+      "id": "node-rss-anthropic",
+      "name": "RSS — Anthropic Blog",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        500,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://huggingface.co/blog/feed.xml",
+        "limit": 6,
+        "options": {}
+      },
+      "id": "node-rss-huggingface",
+      "name": "RSS — Hugging Face",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        500,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.technologyreview.com/feed/",
+        "limit": 5,
+        "options": {}
+      },
+      "id": "node-rss-mit",
+      "name": "RSS — MIT Tech Review AI",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        500,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.therundown.ai/rss",
+        "limit": 6,
+        "options": {}
+      },
+      "id": "node-rss-rundown",
+      "name": "RSS — The Rundown AI",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        500,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.producthunt.com/feed?category=artificial-intelligence",
+        "limit": 8,
+        "options": {}
+      },
+      "id": "node-rss-producthunt",
+      "name": "RSS — Product Hunt",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        500,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+        "limit": 5,
+        "options": {}
+      },
+      "id": "node-rss-techcrunch",
+      "name": "RSS — TechCrunch AI",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        500,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.wired.com/feed/tag/artificial-intelligence/latest/rss",
+        "limit": 4,
+        "options": {}
+      },
+      "id": "node-rss-wired",
+      "name": "RSS — Wired AI",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        500,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.github.com/search/repositories",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "language:python stars:>100 created:>{{ $now.minus(7, 'days').toFormat('yyyy-MM-dd') }}"
+            },
+            {
+              "name": "sort",
+              "value": "stars"
+            },
+            {
+              "name": "order",
+              "value": "desc"
+            },
+            {
+              "name": "per_page",
+              "value": "6"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github.v3+json"
+            },
+            {
+              "name": "User-Agent",
+              "value": "inflection-point-newsletter"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-github-python",
+      "name": "HTTP — GitHub Trending Python",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.github.com/search/repositories",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "stars:>200 created:>{{ $now.minus(7, 'days').toFormat('yyyy-MM-dd') }} topic:ai OR topic:llm OR topic:machine-learning"
+            },
+            {
+              "name": "sort",
+              "value": "stars"
+            },
+            {
+              "name": "order",
+              "value": "desc"
+            },
+            {
+              "name": "per_page",
+              "value": "8"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github.v3+json"
+            },
+            {
+              "name": "User-Agent",
+              "value": "inflection-point-newsletter"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-github-all",
+      "name": "HTTP — GitHub Trending (All/AI)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.github.com/search/repositories",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "language:javascript topic:ai created:>{{ $now.minus(7, 'days').toFormat('yyyy-MM-dd') }}"
+            },
+            {
+              "name": "sort",
+              "value": "stars"
+            },
+            {
+              "name": "order",
+              "value": "desc"
+            },
+            {
+              "name": "per_page",
+              "value": "5"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github.v3+json"
+            },
+            {
+              "name": "User-Agent",
+              "value": "inflection-point-newsletter"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-github-javascript",
+      "name": "HTTP — GitHub Trending JavaScript",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        820
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "github-python",
+              "name": "github_python",
+              "value": "={{ $node[\"HTTP — GitHub Trending Python\"].data[0].json.items.map(item => ({ name: item.name, full_name: item.full_name, description: item.description || 'No description', html_url: item.html_url, stargazers_count: item.stargazers_count, language: item.language, topics: item.topics || [] })) }}",
+              "type": "array"
+            },
+            {
+              "id": "github-all",
+              "name": "github_all",
+              "value": "={{ $node[\"HTTP — GitHub Trending (All/AI)\"].data[0].json.items.map(item => ({ name: item.name, full_name: item.full_name, description: item.description || 'No description', html_url: item.html_url, stargazers_count: item.stargazers_count, language: item.language, topics: item.topics || [] })) }}",
+              "type": "array"
+            },
+            {
+              "id": "github-js",
+              "name": "github_javascript",
+              "value": "={{ $node[\"HTTP — GitHub Trending JavaScript\"].data[0].json.items.map(item => ({ name: item.name, full_name: item.full_name, description: item.description || 'No description', html_url: item.html_url, stargazers_count: item.stargazers_count, language: item.language, topics: item.topics || [] })) }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-format-github",
+      "name": "Set — Format GitHub Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        850,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "raw-content",
+              "name": "raw_content",
+              "value": "=== SOURCE: ANTHROPIC BLOG ===\n{{ $node[\"RSS — Anthropic Blog\"].data.all().map(item => item.json.title + ' | ' + item.json.link + ' | ' + (item.json.contentSnippet || item.json.description || '').substring(0, 200) + ' | ' + item.json.pubDate).join('\\n') }}\n\n=== SOURCE: HUGGING FACE BLOG ===\n{{ $node[\"RSS — Hugging Face\"].data.all().map(item => item.json.title + ' | ' + item.json.link + ' | ' + (item.json.contentSnippet || item.json.description || '').substring(0, 200) + ' | ' + item.json.pubDate).join('\\n') }}\n\n=== SOURCE: MIT TECHNOLOGY REVIEW ===\n{{ $node[\"RSS — MIT Tech Review AI\"].data.all().map(item => item.json.title + ' | ' + item.json.link + ' | ' + (item.json.contentSnippet || item.json.description || '').substring(0, 200) + ' | ' + item.json.pubDate).join('\\n') }}\n\n=== SOURCE: THE RUNDOWN AI ===\n{{ $node[\"RSS — The Rundown AI\"].data.all().map(item => item.json.title + ' | ' + item.json.link + ' | ' + (item.json.contentSnippet || item.json.description || '').substring(0, 200) + ' | ' + item.json.pubDate).join('\\n') }}\n\n=== SOURCE: PRODUCT HUNT AI ===\n{{ $node[\"RSS — Product Hunt\"].data.all().map(item => item.json.title + ' | ' + item.json.link + ' | ' + (item.json.description || '').substring(0, 200) + ' | ' + item.json.pubDate).join('\\n') }}\n\n=== SOURCE: TECHCRUNCH AI ===\n{{ $node[\"RSS — TechCrunch AI\"].data.all().map(item => item.json.title + ' | ' + item.json.link + ' | ' + (item.json.contentSnippet || item.json.description || '').substring(0, 200) + ' | ' + item.json.pubDate).join('\\n') }}\n\n=== SOURCE: WIRED AI ===\n{{ $node[\"RSS — Wired AI\"].data.all().map(item => item.json.title + ' | ' + item.json.link + ' | ' + (item.json.contentSnippet || item.json.description || '').substring(0, 200) + ' | ' + item.json.pubDate).join('\\n') }}\n\n=== SOURCE: GITHUB TRENDING (PYTHON) ===\n{{ $node[\"Set — Format GitHub Data\"].json[\"github_python\"].map(repo => repo.name + ' ★' + repo.stargazers_count + ' | ' + repo.html_url + ' | ' + (repo.description || 'No description')).join('\\n') }}\n\n=== SOURCE: GITHUB TRENDING (ALL/AI) ===\n{{ $node[\"Set — Format GitHub Data\"].json[\"github_all\"].map(repo => repo.name + ' ★' + repo.stargazers_count + ' | ' + repo.html_url + ' | ' + (repo.description || 'No description')).join('\\n') }}\n\n=== SOURCE: GITHUB TRENDING (JAVASCRIPT) ===\n{{ $node[\"Set — Format GitHub Data\"].json[\"github_javascript\"].map(repo => repo.name + ' ★' + repo.stargazers_count + ' | ' + repo.html_url + ' | ' + (repo.description || 'No description')).join('\\n') }}",
+              "type": "string"
+            },
+            {
+              "id": "timestamp",
+              "name": "collection_timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "source-count",
+              "name": "source_count",
+              "value": "=11",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-combine-content",
+      "name": "Set — Combine All Raw Content",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1200,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "⚠️ REPLACE_WITH_YOUR_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "Inflection Point Data"
+        },
+        "options": {
+          "range": "raw_content!A:C"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {}
+        },
+        "inputData": "{\n  \"timestamp\": \"={{ $now.startOf('week').toISO() }}\",\n  \"raw_content\": \"={{ $json.raw_content }}\",\n  \"source_count\": \"={{ $json.source_count }}\"\n  }"
+      },
+      "id": "node-google-sheets",
+      "name": "Google Sheets — Write Raw Content",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1550,
+        400
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "⚠️ REPLACE_WITH_YOUR_CREDENTIAL_ID",
+          "name": "⚠️ REPLACE_WITH_YOUR_CREDENTIAL_NAME"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS — Anthropic Blog",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS — Hugging Face",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS — MIT Tech Review AI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS — The Rundown AI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS — Product Hunt",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS — TechCrunch AI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS — Wired AI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP — GitHub Trending Python",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP — GitHub Trending (All/AI)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP — GitHub Trending JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP — GitHub Trending Python": {
+      "main": [
+        [
+          {
+            "node": "Set — Format GitHub Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP — GitHub Trending (All/AI)": {
+      "main": [
+        [
+          {
+            "node": "Set — Format GitHub Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP — GitHub Trending JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Set — Format GitHub Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set — Format GitHub Data": {
+      "main": [
+        [
+          {
+            "node": "Set — Combine All Raw Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS — Anthropic Blog": {
+      "main": [
+        [
+          {
+            "node": "Set — Combine All Raw Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS — Hugging Face": {
+      "main": [
+        [
+          {
+            "node": "Set — Combine All Raw Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS — MIT Tech Review AI": {
+      "main": [
+        [
+          {
+            "node": "Set — Combine All Raw Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS — The Rundown AI": {
+      "main": [
+        [
+          {
+            "node": "Set — Combine All Raw Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS — Product Hunt": {
+      "main": [
+        [
+          {
+            "node": "Set — Combine All Raw Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS — TechCrunch AI": {
+      "main": [
+        [
+          {
+            "node": "Set — Combine All Raw Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS — Wired AI": {
+      "main": [
+        [
+          {
+            "node": "Set — Combine All Raw Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set — Combine All Raw Content": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets — Write Raw Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}
