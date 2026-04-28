@@ -1,7 +1,9 @@
-
 ---
 name: personalized-ai-intelligence-briefing
-description: "A professional-grade AI intelligence system that filters the noise of the \"AI boom\" and delivers only what matters to YOUR specific role and workflows. Unlike generic AI news aggregators, this system: - Profiles your exact job, tech stack, and business objectives - Filters updates through a three-gate relevance system (recency, workflow impact, capability gain) - Delivers tactical implementation blueprints, not just headlines - Assigns priority levels and relevance scores based on your context - Identifies what tools to replace, what to adopt, and what to ignore Perfect for professionals who need to stay ahead of AI developments without drowning in hype, research papers, and irrelevant product launches. Output modes: Quick Scan (top 2 signals), Deep Dive (full implementation), Tool Hunt (apps only), Model Watch (LLM updates only). Think of it as your personal AI strategist—delivering competitive advantages, not news."
+author: kabeer-mehdi
+version: 1.0
+description: >
+A professional-grade AI intelligence system that filters the noise of the \"AI boom\" and delivers only what matters to YOUR specific role and workflows. Unlike generic AI news aggregators, this system: - Profiles your exact job, tech stack, and business objectives - Filters updates through a three-gate relevance system (recency, workflow impact, capability gain) - Delivers tactical implementation blueprints, not just headlines - Assigns priority levels and relevance scores based on your context - Identifies what tools to replace, what to adopt, and what to ignore Perfect for professionals who need to stay ahead of AI developments without drowning in hype, research papers, and irrelevant product launches. Output modes: Quick Scan (top 2 signals), Deep Dive (full implementation), Tool Hunt (apps only), Model Watch (LLM updates only). Think of it as your personal AI strategist—delivering competitive advantages, not news.
 ---
  
 # ROLE
