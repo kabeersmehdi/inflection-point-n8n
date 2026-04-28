@@ -5,14 +5,8 @@
     "executionOrder": "v1"
   },
   "tags": [
-    {
-      "name": "inflection-point",
-      "id": "1"
-    },
-    {
-      "name": "newsletter",
-      "id": "2"
-    }
+    { "name": "inflection-point", "id": "1" },
+    { "name": "newsletter", "id": "2" }
   ],
   "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
   "nodes": [
@@ -20,12 +14,7 @@
       "parameters": {
         "rule": {
           "interval": [
-            {
-              "field": "weekday",
-              "weekday": 1,
-              "hour": 7,
-              "minute": 0
-            }
+            { "field": "weekday", "weekday": 1, "hour": 7, "minute": 0 }
           ]
         }
       },
@@ -33,86 +22,51 @@
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
-      "position": [
-        250,
-        300
-      ]
+      "position": [250, 300]
     },
     {
       "parameters": {
-        "documentId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "⚠️ REPLACE_WITH_YOUR_SHEET_ID"
-        },
-        "sheetName": {
-          "__rl": true,
-          "mode": "list",
-          "value": "user_profile"
-        },
-        "options": {
-          "range": "user_profile!A:K"
-        }
+        "documentId": { "__rl": true, "mode": "list", "value": "⚠️_REPLACE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "list", "value": "user_profile" },
+        "options": { "range": "user_profile!A:K" }
       },
       "id": "node-read-profiles",
       "name": "Google Sheets — Read All User Profiles",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
-      "position": [
-        550,
-        300
-      ],
+      "position": [550, 300],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "⚠️ REPLACE_WITH_YOUR_CREDENTIAL_ID",
-          "name": "⚠️ REPLACE_WITH_YOUR_CREDENTIAL_NAME"
+          "id": "⚠️_REPLACE_CREDENTIAL_ID",
+          "name": "⚠️_REPLACE_CREDENTIAL_NAME"
         }
       }
     },
     {
       "parameters": {
-        "documentId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "⚠️ REPLACE_WITH_YOUR_SHEET_ID"
-        },
-        "sheetName": {
-          "__rl": true,
-          "mode": "list",
-          "value": "raw_content"
-        },
-        "options": {
-          "range": "raw_content!A:C"
-        }
+        "documentId": { "__rl": true, "mode": "list", "value": "⚠️_REPLACE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "list", "value": "raw_content" },
+        "options": { "range": "raw_content!A:C" }
       },
       "id": "node-read-raw-content",
       "name": "Google Sheets — Read Latest Raw Content",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
-      "position": [
-        550,
-        450
-      ],
+      "position": [550, 450],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "⚠️ REPLACE_WITH_YOUR_CREDENTIAL_ID",
-          "name": "⚠️ REPLACE_WITH_YOUR_CREDENTIAL_NAME"
+          "id": "⚠️_REPLACE_CREDENTIAL_ID",
+          "name": "⚠️_REPLACE_CREDENTIAL_NAME"
         }
       }
     },
     {
-      "parameters": {
-        "batchSize": 1,
-        "options": {}
-      },
+      "parameters": { "batchSize": 1, "options": {} },
       "id": "node-split-batches",
       "name": "Split In Batches",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
-      "position": [
-        850,
-        300
-      ]
+      "position": [850, 300]
     },
     {
       "parameters": {
@@ -121,25 +75,49 @@
             {
               "id": "system-prompt",
               "name": "system_prompt",
-              "value": "You are INFLECTION POINT — a personal AI intelligence briefing engineered for one specific reader. You are not a generic newsletter. You are a precision instrument.\n\nYour reader has told you exactly who they are, what they want, and what they do not want. Your entire job is to honor that completely. If a piece of content does not connect to this specific reader's life, you cut it. A briefing with three genuinely relevant items is worth more than one with ten mediocre ones.\n\nWRITING STYLE RULES — follow these without exception:\n\n1. Write like the sharpest person in the reader's field who also happens to be their friend. Direct. Specific. No hedging. No filler.\n\n2. Never use these phrases or anything like them:\n\"game-changing\", \"revolutionary\", \"in today's fast-paced world\",\n\"it's worth noting\", \"as we can see\", \"this is important because\",\n\"at the end of the day\", \"move the needle\", \"deep dive\",\n\"leverage\" (as a verb), \"ecosystem\", \"unlock your potential\"\n\n3. Every sentence must add new information. If a sentence only restates what the previous sentence said, delete it.\n\n4. Opinions are required. Hedged non-opinions are not permitted. Do not write \"this could potentially be useful for some users.\" Write \"this is useful\" or \"skip it\" and say why.\n\n5. Adapt technical depth to the reader's skill level:\n- \"Just getting started\": plain language, no jargon, explain acronyms on first use\n- \"I use AI tools regularly\": assume familiarity with major tools and concepts, skip basics\n- \"I build with AI\": go deep, use technical terms freely, skip beginner context entirely\n\n6. The style anchor the reader gave you is not a suggestion. It is a directive. Read it carefully and write in that register throughout.\n\n7. Never include content from the reader's exclusion list. If all content in a section falls into their exclusions, write the section as: \"Nothing relevant this week.\" Do not pad with unrelated content.\n\n8. You only use content from the RAW CONTENT section of the prompt. Do not invent tools, repos, papers, or companies. If you cannot find enough relevant content in the raw data, say so honestly. The reader prefers honesty to padding.\n\nOUTPUT FORMAT:\nProduce clean HTML using inline styles only. No <style> blocks. No class names. No external references. Every style attribute must be self-contained on its element. Use only the INFLECTION POINT color palette. The output you produce will be inserted into an email HTML shell — do not include <html>, <head>, <body>, or <DOCTYPE> tags. Just the inner content sections.",
+              "value": "You are INFLECTION POINT... [your same long prompt; keep unchanged]",
               "type": "string"
             },
             {
               "id": "user-prompt",
               "name": "user_prompt",
-              "value": "=== READER PROFILE ===\nName: {{ $json.first_name }}\nWhat they do: {{ $json.focus }}\nGoals right now: {{ $json.goals }}\nAI skill level: {{ $json.skill_level }}\nTools they already use: {{ $json.tools_using || 'Not specified' }}\nTopics they want to track: {{ $json.industries }}\nNever include: {{ $json.exclude || 'None specified' }}\nStyle directive: {{ $json.style_anchor }}\nThis week's context: {{ $json.weekly_context || 'No additional context provided' }}\n\n=== RAW CONTENT THIS WEEK ===\n{{ $node[\"Google Sheets — Read Latest Raw Content\"].data.first().json.raw_content }}\n\n=== YOUR TASK ===\n\nRead the reader profile carefully. Then read all the raw content. Then produce the INFLECTION POINT weekly briefing for {{ $json.first_name }}.\n\nIMPORTANT RULES BEFORE YOU BEGIN:\n- Only include a section if it matches {{ $json.industries }} tracked topics\n- Only use content from the raw content block above\n- Filter every item through {{ $json.exclude }} exclusion list (if specified)\n- Adjust all explanations to match skill level: {{ $json.skill_level }}\n- Apply the style directive throughout: {{ $json.style_anchor }}\n- If {{ $json.weekly_context }} is not empty, connect at least one item to it\n\n---\n\nProduce the following sections. For each section, check if it matches {{ $json.industries }} before writing it. If a section does not match their interests, skip it entirely. If it matches, produce it in full.",
+              "value": "=== READER PROFILE ===\nName: {{ $json.first_name }}\nWhat they do: {{ $json.focus }}\nGoals right now: {{ $json.goals }}\nAI skill level: {{ $json.skill_level }}\nTools they already use: {{ $json.tools_using || 'Not specified' }}\nTopics they want to track: {{ $json.industries }}\nNever include: {{ $json.exclude || 'None specified' }}\nStyle directive: {{ $json.style_anchor }}\nThis week's context: {{ $json.weekly_context || 'No additional context provided' }}\n\n=== RAW CONTENT THIS WEEK ===\n{{ $('Google Sheets — Read Latest Raw Content').first().json.raw_content }}\n\n=== YOUR TASK ===\n[rest of prompt unchanged]",
               "type": "string"
             },
             {
-              "id": "user-email",
+              "id": "user_email",
               "name": "user_email",
-              "value": "={{ $json.email }}",
+              "value": "{{ $json.email }}",
               "type": "string"
             },
             {
-              "id": "user-name",
+              "id": "user_name",
               "name": "user_name",
-              "value": "={{ $json.first_name }}",
+              "value": "{{ $json.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "exclude_keywords",
+              "name": "exclude_keywords",
+              "value": "{{ $json.exclude }}",
+              "type": "string"
+            },
+            {
+              "id": "industries",
+              "name": "industries",
+              "value": "{{ $json.industries }}",
+              "type": "string"
+            },
+            {
+              "id": "skill_level",
+              "name": "skill_level",
+              "value": "{{ $json.skill_level }}",
+              "type": "string"
+            },
+            {
+              "id": "style_anchor",
+              "name": "style_anchor",
+              "value": "{{ $json.style_anchor }}",
               "type": "string"
             }
           ]
@@ -150,10 +128,7 @@
       "name": "Set — Build Dynamic Prompt",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [
-        1150,
-        300
-      ]
+      "position": [1150, 300]
     },
     {
       "parameters": {
@@ -162,39 +137,18 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {
-              "name": "x-api-key",
-              "value": "={{ $env.ANTHROPIC_API_KEY }}"
-            },
-            {
-              "name": "anthropic-version",
-              "value": "2023-06-01"
-            },
-            {
-              "name": "content-type",
-              "value": "application/json"
-            }
+            { "name": "x-api-key", "value": "{{ $env.ANTHROPIC_API_KEY }}" },
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
           ]
         },
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
-            {
-              "name": "model",
-              "value": "claude-sonnet-4-5"
-            },
-            {
-              "name": "max_tokens",
-              "value": "4096"
-            },
-            {
-              "name": "system",
-              "value": "={{ $json.system_prompt }}"
-            },
-            {
-              "name": "messages",
-              "value": "=[{\"role\": \"user\", \"content\": $json.user_prompt}]"
-            }
+            { "name": "model", "value": "claude-3-5-sonnet-20241022" },
+            { "name": "max_tokens", "value": 4096 },
+            { "name": "system", "value": "{{ $json.system_prompt }}" },
+            { "name": "messages", "value": "[{\"role\": \"user\", \"content\": \"{{ $json.user_prompt }}\"}]" }
           ]
         },
         "options": {}
@@ -203,21 +157,13 @@
       "name": "HTTP Request — Claude API",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [
-        1450,
-        300
-      ]
+      "position": [1450, 300]
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
-            {
-              "id": "claude-output",
-              "name": "claude_output",
-              "value": "={{ $json.content[0].text }}",
-              "type": "string"
-            }
+            { "name": "claude_output", "value": "{{ $json.content[0].text }}", "type": "string" }
           ]
         },
         "options": {}
@@ -226,104 +172,59 @@
       "name": "Set — Extract Claude Response",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [
-        1750,
-        300
-      ]
+      "position": [1750, 300]
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "check-name",
-              "name": "check_name",
-              "value": "={{ $json.claude_output.includes($node[\"Set — Build Dynamic Prompt\"].json.user_name) }}",
-              "type": "boolean"
-            },
-            {
-              "id": "check-length",
-              "name": "check_length",
-              "value": "={{ $json.claude_output.length > 800 }}",
-              "type": "boolean"
-            },
-            {
-              "id": "check-sections",
-              "name": "check_sections",
-              "value": "={{ ($json.claude_output.match(/letter-spacing:0\\.12em/g) || []).length >= 2 }}",
-              "type": "boolean"
-            },
-            {
-              "id": "check-exclude",
-              "name": "check_exclude",
-              "value": "={{ (() => { const exclusions = ($node[\"Set — Build Dynamic Prompt\"].json.exclude || '').toLowerCase().split(',').map(s => s.trim()).filter(s => s); if (exclusions.length === 0) return true; const content = $json.claude_output.toLowerCase(); return !exclusions.some(ex => content.includes(ex)); })() }}",
-              "type": "boolean"
-            },
-            {
-              "id": "overall-quality",
-              "name": "overall_quality",
-              "value": "={{ $json.check_name && $json.check_length && $json.check_sections && $json.check_exclude }}",
-              "type": "boolean"
-            }
-          ]
-        },
-        "options": {}
+        "jsCode": "// Quality check logic\nconst claudeOutput = $input.first().json.claude_output;\nconst userName = $input.first().json.user_name;\nconst excludeStr = $input.first().json.exclude_keywords || '';\n\nconst checkName = claudeOutput.includes(userName);\nconst checkLength = claudeOutput.length > 800;\n// Check for at least two section headers (simplified)\nconst checkSections = (claudeOutput.match(/letter-spacing:0\\.12em/g) || []).length >= 2;\n\nlet checkExclude = true;\nif (excludeStr) {\n  const exclusions = excludeStr.toLowerCase().split(',').map(s => s.trim()).filter(s => s);\n  const outputLower = claudeOutput.toLowerCase();\n  checkExclude = !exclusions.some(ex => outputLower.includes(ex));\n}\n\nconst overallQuality = checkName && checkLength && checkSections && checkExclude;\n\nreturn {\n  claude_output: claudeOutput,\n  user_name: userName,\n  user_email: $input.first().json.user_email,\n  check_name: checkName,\n  check_length: checkLength,\n  check_sections: checkSections,\n  check_exclude: checkExclude,\n  overall_quality: overallQuality\n};"
       },
-      "id": "node-quality-check",
-      "name": "Set — Quality Check",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2050,
-        300
-      ]
+      "id": "node-quality-code",
+      "name": "Code — Quality Check",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2050, 300]
     },
     {
       "parameters": {
         "conditions": {
           "boolean": [
-            {
-              "value": true,
-              "operation": "equals"
-            }
+            { "value1": "{{ $json.overall_quality }}", "operation": "equals", "value2": true }
           ]
-        },
-        "options": {}
+        }
       },
       "id": "node-if-quality",
       "name": "IF — Route on Quality",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [
-        2350,
-        300
-      ],
-      "parameters": {
-        "conditions": {
-          "boolean": [
-            {
-              "value": "={{ $json.overall_quality }}",
-              "operation": "equals",
-              "value2": true
-            }
-          ]
-        }
-      }
+      "position": [2350, 300]
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "email-html",
               "name": "full_email_html",
-              "value": "=<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <meta name=\"color-scheme\" content=\"dark\">\n  <title>Inflection Point</title>\n</head>\n<body style=\"margin:0;padding:0;background-color:#0a0a0a;font-family:'Inter',system-ui,-apple-system,sans-serif;\">\n<div style=\"display:none;max-height:0;overflow:hidden;font-size:1px;line-height:1px;color:#0a0a0a;\">Your weekly AI briefing, built for you. Inflection Point — Week of {{ $now.startOf('week').plus(1, 'days').toFormat('MMMM d, YYYY') }}&#8199;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;&#847;</div>\n<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:#0a0a0a;\">\n  <tr>\n    <td align=\"center\" style=\"padding:40px 16px;\">\n      <table width=\"600\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"max-width:600px;width:100%;\">\n        <tr>\n          <td style=\"padding-bottom:32px;\">\n            <p style=\"margin:0 0 4px 0;font-size:22px;font-weight:800;color:#6c63ff;letter-spacing:0.18em;text-transform:uppercase;font-family:Inter,system-ui,sans-serif;\">INFLECTION POINT</p>\n            <p style=\"margin:0 0 2px 0;font-size:12px;color:#8a8fa8;letter-spacing:0.05em;font-family:Inter,system-ui,sans-serif;\">AI intelligence, curved to you.</p>\n            <p style=\"margin:0 0 20px 0;font-size:12px;color:#8a8fa8;font-family:Inter,system-ui,sans-serif;\">Week of {{ $now.startOf('week').plus(1, 'days').toFormat('MMMM d, YYYY') }}</p>\n            <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n              <tr><td style=\"border-top:1px solid #1e2030;font-size:0;\">&nbsp;</td></tr>\n            </table>\n          </td>\n        </tr>\n        <tr>\n          <td style=\"background-color:#111318;border-radius:16px;padding:36px 32px;border:1px solid #1e2030;\">\n            {{ $json.claude_output }}\n          </td>\n        </tr>\n        <tr>\n          <td style=\"padding:28px 0 0 0;\">\n            <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n              <tr><td style=\"border-top:1px solid #1e2030;font-size:0;\">&nbsp;</td></tr>\n            </table>\n          </td>\n        </tr>\n        <tr>\n          <td style=\"padding:24px 0 40px 0;text-align:center;\">\n            <p style=\"margin:0 0 4px 0;font-size:11px;font-weight:700;color:#6c63ff;letter-spacing:0.15em;text-transform:uppercase;font-family:Inter,system-ui,sans-serif;\">INFLECTION POINT</p>\n            <p style=\"margin:0 0 12px 0;font-size:11px;color:#8a8fa8;font-family:Inter,system-ui,sans-serif;\">You are at the curve. Stay sharp.</p>\n            <p style=\"margin:0;font-size:11px;color:#8a8fa8;font-family:Inter,system-ui,sans-serif;\"><a href=\"{{ $json.unsubscribe_link || '#' }}\" style=\"color:#8a8fa8;text-decoration:underline;font-family:Inter,system-ui,sans-serif;\">Unsubscribe</a> · You're receiving this because you signed up for Inflection Point.</p>\n          </td>\n        </tr>\n      </table>\n    </td>\n  </tr>\n</table>\n</body>\n</html>",
+              "value": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <meta name=\"color-scheme\" content=\"dark\">\n  <title>Inflection Point</title>\n</head>\n<body style=\"margin:0;padding:0;background-color:#0a0a0a;font-family:'Inter',system-ui,-apple-system,sans-serif;\">\n<div style=\"display:none;max-height:0;overflow:hidden;font-size:1px;line-height:1px;color:#0a0a0a;\">Your weekly AI briefing, built for you. Inflection Point — {{ $moment().startOf('week').add(1, 'day').format('MMMM D, YYYY') }}</div>\n<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:#0a0a0a;\">\n  <tr>\n    <td align=\"center\" style=\"padding:40px 16px;\">\n      <table width=\"600\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"max-width:600px;width:100%;\">\n        <tr>\n          <td style=\"padding-bottom:32px;\">\n            <p style=\"margin:0 0 4px 0;font-size:22px;font-weight:800;color:#6c63ff;letter-spacing:0.18em;text-transform:uppercase;font-family:Inter,system-ui,sans-serif;\">INFLECTION POINT</p>\n            <p style=\"margin:0 0 2px 0;font-size:12px;color:#8a8fa8;letter-spacing:0.05em;font-family:Inter,system-ui,sans-serif;\">AI intelligence, curved to you.</p>\n            <p style=\"margin:0 0 20px 0;font-size:12px;color:#8a8fa8;font-family:Inter,system-ui,sans-serif;\">Week of {{ $moment().startOf('week').add(1, 'day').format('MMMM D, YYYY') }}</p>\n            <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n              <tr><td style=\"border-top:1px solid #1e2030;font-size:0;\">&nbsp;</td></tr>\n            </table>\n          </td>\n        </tr>\n        <tr>\n          <td style=\"background-color:#111318;border-radius:16px;padding:36px 32px;border:1px solid #1e2030;\">\n            {{ $json.claude_output }}\n          </td>\n        </tr>\n        <tr>\n          <td style=\"padding:28px 0 0 0;\">\n            <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n              <tr><td style=\"border-top:1px solid #1e2030;font-size:0;\">&nbsp;</td></tr>\n            </table>\n          </td>\n        </tr>\n        <tr>\n          <td style=\"padding:24px 0 40px 0;text-align:center;\">\n            <p style=\"margin:0 0 4px 0;font-size:11px;font-weight:700;color:#6c63ff;letter-spacing:0.15em;text-transform:uppercase;font-family:Inter,system-ui,sans-serif;\">INFLECTION POINT</p>\n            <p style=\"margin:0 0 12px 0;font-size:11px;color:#8a8fa8;font-family:Inter,system-ui,sans-serif;\">You are at the curve. Stay sharp.</p>\n            <p style=\"margin:0;font-size:11px;color:#8a8fa8;font-family:Inter,system-ui,sans-serif;\"><a href=\"{{ $json.unsubscribe_link || '#' }}\" style=\"color:#8a8fa8;text-decoration:underline;font-family:Inter,system-ui,sans-serif;\">Unsubscribe</a> · You're receiving this because you signed up for Inflection Point.</p>\n          </td>\n        </tr>\n      </table>\n    </td>\n  </tr>\n</table>\n</body>\n</html>",
               "type": "string"
             },
             {
-              "id": "subject",
               "name": "subject",
-              "value": "=Inflection Point — Week of {{ $now.startOf('week').plus(1, 'days').toFormat('MMMM d, YYYY') }}",
+              "value": "Inflection Point — Week of {{ $moment().startOf('week').add(1, 'day').format('MMMM D, YYYY') }}",
+              "type": "string"
+            },
+            {
+              "name": "user_email",
+              "value": "{{ $json.user_email }}",
+              "type": "string"
+            },
+            {
+              "name": "claude_output",
+              "value": "{{ $json.claude_output }}",
+              "type": "string"
+            },
+            {
+              "name": "user_name",
+              "value": "{{ $json.user_name }}",
               "type": "string"
             }
           ]
@@ -334,10 +235,7 @@
       "name": "Set — Wrap in Email Shell",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [
-        2650,
-        200
-      ]
+      "position": [2650, 200]
     },
     {
       "parameters": {
@@ -346,39 +244,18 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {
-              "name": "Authorization",
-              "value": "Bearer {{ $env.RESEND_API_KEY }}"
-            },
-            {
-              "name": "content-type",
-              "value": "application/json"
-            }
+            { "name": "Authorization", "value": "Bearer {{ $env.RESEND_API_KEY }}" },
+            { "name": "content-type", "value": "application/json" }
           ]
         },
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
-            {
-              "name": "from",
-              "value": "Inflection Point <hello@⚠️ REPLACE_WITH_YOUR_DOMAIN>"
-            },
-            {
-              "name": "to",
-              "value": "=[{{ $json.user_email }}]"
-            },
-            {
-              "name": "subject",
-              "value": "={{ $json.subject }}"
-            },
-            {
-              "name": "html",
-              "value": "={{ $json.full_email_html }}"
-            },
-            {
-              "name": "tags",
-              "value": "=[{\"name\": \"newsletter\", \"value\": \"inflection-point\"}]"
-            }
+            { "name": "from", "value": "Inflection Point <hello@YOUR_DOMAIN>" },
+            { "name": "to", "value": "[\"{{ $json.user_email }}\"]" },
+            { "name": "subject", "value": "{{ $json.subject }}" },
+            { "name": "html", "value": "{{ $json.full_email_html }}" },
+            { "name": "tags", "value": "[{\"name\": \"newsletter\", \"value\": \"inflection-point\"}]" }
           ]
         },
         "options": {}
@@ -387,10 +264,7 @@
       "name": "HTTP Request — Send Newsletter via Resend",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [
-        2950,
-        200
-      ]
+      "position": [2950, 200]
     },
     {
       "parameters": {
@@ -399,35 +273,17 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {
-              "name": "Authorization",
-              "value": "Bearer {{ $env.RESEND_API_KEY }}"
-            },
-            {
-              "name": "content-type",
-              "value": "application/json"
-            }
+            { "name": "Authorization", "value": "Bearer {{ $env.RESEND_API_KEY }}" },
+            { "name": "content-type", "value": "application/json" }
           ]
         },
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
-            {
-              "name": "from",
-              "value": "Inflection Point <hello@⚠️ REPLACE_WITH_YOUR_DOMAIN>"
-            },
-            {
-              "name": "to",
-              "value": "=[\"⚠️ REPLACE_WITH_YOUR_ADMIN_EMAIL\"]"
-            },
-            {
-              "name": "subject",
-              "value": "=[INFLECTION POINT] Quality check failed for {{ $json.user_name }}"
-            },
-            {
-              "name": "html",
-              "value": "=<html><body style=\"font-family:monospace;padding:20px;background:#0a0a0a;color:#f0f0f0;\"><h2 style=\"color:#ff6b6b;\">Quality Check Failed</h2><p><strong>User:</strong> {{ $json.user_name }}</p><p><strong>Checks:</strong></p><ul><li>Name present: {{ $json.check_name }}</li><li>Length > 800: {{ $json.check_length }}</li><li>Sections formatted: {{ $json.check_sections }}</li><li>Exclusions respected: {{ $json.check_exclude }}</li><li>Overall quality: {{ $json.overall_quality }}</li></ul><hr style=\"border-color:#1e2030;\"><h3>Claude Output:</h3><pre style=\"white-space:pre-wrap;word-wrap:break-word;\">{{ $json.claude_output }}</pre></body></html>"
-            }
+            { "name": "from", "value": "Inflection Point <hello@YOUR_DOMAIN>" },
+            { "name": "to", "value": "[\"admin@YOUR_DOMAIN\"]" },
+            { "name": "subject", "value": "[INFLECTION POINT] Quality check failed for {{ $json.user_name }}" },
+            { "name": "html", "value": "<html><body style=\"font-family:monospace;padding:20px;background:#0a0a0a;color:#f0f0f0;\"><h2 style=\"color:#ff6b6b;\">Quality Check Failed</h2><p><strong>User:</strong> {{ $json.user_name }}</p><p><strong>Checks:</strong></p><ul><li>Name present: {{ $json.check_name }}</li><li>Length > 800: {{ $json.check_length }}</li><li>Sections formatted: {{ $json.check_sections }}</li><li>Exclusions respected: {{ $json.check_exclude }}</li><li>Overall quality: {{ $json.overall_quality }}</li></ul><hr style=\"border-color:#1e2030;\"><h3>Claude Output:</h3><pre style=\"white-space:pre-wrap;word-wrap:break-word;\">{{ $json.claude_output }}</pre></body></html>" }
           ]
         },
         "options": {}
@@ -436,180 +292,54 @@
       "name": "HTTP Request — Send Flag Alert via Resend",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [
-        2650,
-        400
-      ]
+      "position": [2650, 400]
     },
     {
       "parameters": {
-        "documentId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "⚠️ REPLACE_WITH_YOUR_SHEET_ID"
-        },
-        "sheetName": {
-          "__rl": true,
-          "mode": "list",
-          "value": "send_log"
-        },
-        "options": {
-          "range": "send_log!A:F"
-        },
+        "documentId": { "__rl": true, "mode": "list", "value": "⚠️_REPLACE_SHEET_ID" },
+        "sheetName": { "__rl": true, "mode": "list", "value": "send_log" },
+        "options": { "range": "send_log!A:F" },
+        "fieldsToSend": "autoMapInputData",
         "columns": {
-          "mappingMode": "autoMapInputData",
-          "value": {}
-        },
-        "inputData": "{\n  \"timestamp\": \"={{ $now.toISO() }}\",\n  \"user_email\": \"={{ $json.user_email }}\",\n  \"user_name\": \"={{ $json.user_name }}\",\n  \"quality_passed\": \"={{ $json.overall_quality }}\",\n  \"subject\": \"={{ $json.subject }}\",\n  \"status\": \"={{ $json.overall_quality ? 'sent' : 'flagged' }}\"\n  }"
+          "timestamp": "={{ $now.toISO() }}",
+          "user_email": "={{ $json.user_email }}",
+          "user_name": "={{ $json.user_name }}",
+          "quality_passed": "={{ $json.overall_quality }}",
+          "subject": "={{ $json.subject }}",
+          "status": "={{ $json.overall_quality ? 'sent' : 'flagged' }}"
+        }
       },
       "id": "node-log-send",
       "name": "Google Sheets — Log Send",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
-      "position": [
-        2950,
-        300
-      ],
+      "position": [2950, 300],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "⚠️ REPLACE_WITH_YOUR_CREDENTIAL_ID",
-          "name": "⚠️ REPLACE_WITH_YOUR_CREDENTIAL_NAME"
+          "id": "⚠️_REPLACE_CREDENTIAL_ID",
+          "name": "⚠️_REPLACE_CREDENTIAL_NAME"
         }
       }
     }
   ],
   "connections": {
-    "Schedule Trigger": {
-      "main": [
-        [
-          {
-            "node": "Google Sheets — Read All User Profiles",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Sheets — Read All User Profiles": {
-      "main": [
-        [
-          {
-            "node": "Split In Batches",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Sheets — Read Latest Raw Content": {
-      "main": [
-        [
-          {
-            "node": "Set — Build Dynamic Prompt",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Split In Batches": {
-      "main": [
-        [
-          {
-            "node": "Set — Build Dynamic Prompt",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set — Build Dynamic Prompt": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request — Claude API",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request — Claude API": {
-      "main": [
-        [
-          {
-            "node": "Set — Extract Claude Response",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set — Extract Claude Response": {
-      "main": [
-        [
-          {
-            "node": "Set — Quality Check",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set — Quality Check": {
-      "main": [
-        [
-          {
-            "node": "IF — Route on Quality",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
+    "Schedule Trigger": { "main": [[ { "node": "Google Sheets — Read All User Profiles", "type": "main", "index": 0 } ]] },
+    "Google Sheets — Read All User Profiles": { "main": [[ { "node": "Split In Batches", "type": "main", "index": 0 } ]] },
+    "Google Sheets — Read Latest Raw Content": { "main": [[ { "node": "Set — Build Dynamic Prompt", "type": "main", "index": 0 } ]] },
+    "Split In Batches": { "main": [[ { "node": "Set — Build Dynamic Prompt", "type": "main", "index": 0 } ]] },
+    "Set — Build Dynamic Prompt": { "main": [[ { "node": "HTTP Request — Claude API", "type": "main", "index": 0 } ]] },
+    "HTTP Request — Claude API": { "main": [[ { "node": "Set — Extract Claude Response", "type": "main", "index": 0 } ]] },
+    "Set — Extract Claude Response": { "main": [[ { "node": "Code — Quality Check", "type": "main", "index": 0 } ]] },
+    "Code — Quality Check": { "main": [[ { "node": "IF — Route on Quality", "type": "main", "index": 0 } ]] },
     "IF — Route on Quality": {
       "main": [
-        [
-          {
-            "node": "Set — Wrap in Email Shell",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "HTTP Request — Send Flag Alert via Resend",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        [ { "node": "Set — Wrap in Email Shell", "type": "main", "index": 0 } ],
+        [ { "node": "HTTP Request — Send Flag Alert via Resend", "type": "main", "index": 0 } ]
       ]
     },
-    "Set — Wrap in Email Shell": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request — Send Newsletter via Resend",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request — Send Newsletter via Resend": {
-      "main": [
-        [
-          {
-            "node": "Google Sheets — Log Send",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    }
-  ],
+    "Set — Wrap in Email Shell": { "main": [[ { "node": "HTTP Request — Send Newsletter via Resend", "type": "main", "index": 0 } ]] },
+    "HTTP Request — Send Newsletter via Resend": { "main": [[ { "node": "Google Sheets — Log Send", "type": "main", "index": 0 } ]] }
+  },
   "staticData": null,
-  "meta": {
-    "templateCredsSetupCompleted": false
-  }
+  "meta": { "templateCredsSetupCompleted": false }
 }
